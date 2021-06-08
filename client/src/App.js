@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import "./index.css";
 
 function App() {
@@ -9,9 +9,11 @@ function App() {
   const [slug, setSlug] = useState("");
   const [short, setShort] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(0);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(1);
     var req;
     if (slug !== "") {
       req = {
@@ -35,6 +37,7 @@ function App() {
       setError(err.response.data.error);
       setShort("");
     }
+    setLoading(0);
   };
 
   const handleChange = (event) => {
@@ -53,7 +56,21 @@ function App() {
     if (short !== "") {
       return (
         <div className="message">
-          <h4>Short link: <a href={short}>{short}</a></h4>
+          <h4>
+            Short link: <a href={short}>{short}</a>
+          </h4>
+        </div>
+      );
+    }
+  };
+
+  const renderSpinner = () => {
+    if (loading) {
+      return (
+        <div className="spinners">
+          <Spinner animation="grow" variant="primary" />
+          <Spinner animation="grow" variant="primary" />
+          <Spinner animation="grow" variant="primary" />
         </div>
       );
     }
@@ -63,7 +80,9 @@ function App() {
     if (error !== "") {
       return (
         <div className="message">
-          <h4>Error: <span className="error">{error}</span></h4>
+          <h4>
+            Error: <span className="error">{error}</span>
+          </h4>
         </div>
       );
     }
@@ -121,6 +140,7 @@ function App() {
           Shortify
         </Button>
       </Form>
+      {renderSpinner()}
       {renderShort()}
       {renderError()}
     </div>

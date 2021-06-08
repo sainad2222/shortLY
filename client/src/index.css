@@ -19,3 +19,8 @@
 .error{
     color: red;
 }
+
+.spinners{
+    display: flex;
+    justify-content: center;
+}
