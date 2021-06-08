@@ -12,6 +12,10 @@ Tech stack:
     React
     
     Bootstrap
+  
+  Database:
+  
+    MongoDB
     
   Deployed:
   
